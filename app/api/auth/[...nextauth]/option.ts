@@ -8,7 +8,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import { JWT } from "next-auth/jwt";
 import { SessionInterface, UserProfile } from "@/commom.types";
 import dbConnect from '@/lib/mongodb';
-
+import EmailProvider from 'next-auth/providers/email';
 
 
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
@@ -27,7 +27,7 @@ interface CustomSession {
 }
 interface Session {
     user: {
-      id: string;
+      _id: string;
       email: string;
       name?: string;
       image?: string;
@@ -43,88 +43,41 @@ export const options: NextAuthOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID || '',
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
           }),
+            // LinkedIn OAuth provider
+    LinkedInProvider({
+      clientId: process.env.LINKEDIN_CLIENT_ID!,
+      clientSecret: process.env.LINKEDIN_CLIENT_SECRET!,
+    }),
+    
+        
+ // Credentials provider for phone authentication or custom credentials
+
+ CredentialsProvider({
+  name: 'Phone or Username',
+  credentials: {
+    phone: { label: 'Phone', type: 'text', placeholder: 'Enter your phone' },
+    password: { label: 'Password', type: 'password' },
+  },
+  async authorize(credentials) {
+    // Here, validate the user's phone number and password against your backend API
+    const user = { id: '1', name: 'User', phone: credentials?.phone };
+    if (user) return user;
+    return null;
+  },
+})  
 
         
         ],
-    
-   // adapter: MongoDBAdapter(clientPromise),
-   jwt: {
-    encode: ({ secret, token }) => {
-      const encodedToken = jsonwebtoken.sign(
-        {
-          ...token,
-          iss: "grafbase",
-          exp: Math.floor(Date.now() / 1000) + 60 * 60,
+        pages: {
+          signIn: '/auth/signIn', // Customize the sign-in page path
         },
-        secret
-      );
-      
-      return encodedToken;
-    },
-    decode: async ({ secret, token }) => {
-      const decodedToken = jsonwebtoken.verify(token!, secret);
-      return decodedToken as JWT;
-    },
-  },
-    theme:{
-      logo:'https://w7.pngwing.com/pngs/741/124/png-transparent-flexibility-symbol-logo-classroom-physical-flexibility-miscellaneous-purple-violet-thumbnail.png',
-        colorScheme:"light",
-       
-    }, 
+    
 
-    callbacks:{
-      async session({session}){
-       await dbConnect();
-        const email = session?.user?.email as string;
-        try {
-          const data = await Users.findOne({email})as{user?: UserProfile}
-         console.log("i am data" , data)
-    // console.log(data)
-          const newSession = {
-            ...session,
-       
-            user: {
-             ...data?.user,
-              ...session.user,
-              
-            },
-          };
-  //console.log(newSession)
-          return newSession;
-        } catch (error:any) {
-          console.error("Error retrieving user data: ", error.message);
-          return session;
-        }
-       
-      },
-      async signIn({user}:
-        {user:AdapterUser | User} )
-      {
-        await dbConnect();
-        try {
+  
 
-          const existsUser = await Users.findOne({email:user.email})
-
-          if(!existsUser){
-            console.log("no exists user");
-         //   create new user
-             const newUser = await Users.create({
-             
-          name: user.name,
-          email: user.email,
-          image: user.image,
-             })
-          }
-          return true;
-        } catch (error:any) {
-          console.log("Error checking if user exists: ", error.message);
-          return false;
-        }
-      }
-    }
-
-    ,
+    
       secret: process.env.NEXTAUTH_SECRET!,
+      
 
 }
 

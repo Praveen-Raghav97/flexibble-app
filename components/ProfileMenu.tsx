@@ -22,7 +22,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                 <Menu.Button className="flexCenter" onMouseEnter={() => setOpenModal(true)} >
                     {session?.user?.image && (
                         <Image
-                            src={session.user.image}
+                            src={""}
                             width={40}
                             height={40}
                             className="rounded-full"

@@ -14,7 +14,7 @@ import ProfileMenu from './ProfileMenu'
 
 const Navbar = async () => {
   const session  = await getCurrentUser()
-    console.log(session?.user)
+    console.log(session)
   
   
 
@@ -39,7 +39,7 @@ const Navbar = async () => {
     </div>
 
     <div className='flexCenter gap-4'>
-      {session?.user ? (
+      {session ? (
         <>
         <ProfileMenu session={session}/>
       

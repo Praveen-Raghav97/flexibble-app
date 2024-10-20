@@ -1,26 +1,30 @@
-// next.config.js
-
-
 module.exports = {
-  reactStrictMode: true,
   images: {
-    
-      domains: ['s3-alpha.figma.com'],
-    
-      domains: ['letsenhance.io'], // Add other domains if necessary
-      domains: ['res.cloudinary.com', 'letsenhance.io'],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
-        pathname: '/**',
+        hostname: 'i.ytimg.com',
+        port: '',
+        pathname: '/vi/**',
       },
       {
         protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
-        pathname: '/**',
+        hostname: 'randomuser.me',
+        port: '',
+        pathname: '/api/portraits/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'yt3.ggpht.com',
+        port: '',
+        pathname: '/ytc/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'yt3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      }
     ],
   },
 };
-

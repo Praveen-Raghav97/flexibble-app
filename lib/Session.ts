@@ -8,7 +8,7 @@ const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL : 'http://lo
 
 export async function getCurrentUser() {
 const session = await getServerSession(options) as SessionInterface
-console.log(session)
+console.log( "i am session on frontend " ,session)
  return session
 }
 export const getUserProjects = (id: string, last?: number) => {
