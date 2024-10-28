@@ -25,7 +25,9 @@ export interface ProjectInterface {
     };
 }
 
-export interface UserProfile {
+export interface UserProfiles {
+  [key: string]: string | null; // Allow null values
+    
     id: string;
     name: string;
     email: string;
@@ -33,23 +35,17 @@ export interface UserProfile {
     avatarUrl: string;
     githubUrl: string | null;
     linkedinUrl: string | null;
-    projects: {
-      edges: { node: ProjectInterface }[];
-      pageInfo: {
-        hasPreviousPage: boolean;
-        hasNextPage: boolean;
-        startCursor: string;
-        endCursor: string;
-      };
+   
+      
     };
-}
+
 
 export interface SessionInterface extends Session {
   user: User & {
-    id: string;
-    name: string;
-    email: string;
-    avatarUrl: string;
+    _id: string ;
+    name: string ;
+    email: string  ;
+    image?: string ; 
   };
 }
 

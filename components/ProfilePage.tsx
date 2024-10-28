@@ -1,4 +1,4 @@
-import { ProjectInterface, UserProfile } from '@/commom.types'
+import { ProjectInterface, UserProfiles } from '@/commom.types'
 import Image from 'next/image'
 
 import Link from 'next/link'
@@ -6,14 +6,14 @@ import Button from "./Button";
 import ProjectCard from './ProjectCard';
 
 type Props = {
-    user: UserProfile;
+    user: UserProfiles;
 }
 
 const ProfilePage = ({ user }: Props) => (
     <section className='flexCenter flex-col max-w-10xl w-full mx-auto paddings'>
         <section className="flexBetween max-lg:flex-col gap-10 w-full">
             <div className='flex items-start flex-col w-full'>
-                <Image src={user?.avatarUrl} width={100} height={100} className="rounded-full" alt="user image" />
+                <Image src={user?.image || ""} width={80} height={80} className="rounded-full" alt="user image" />
                 <p className="text-4xl font-bold mt-10">{user?.name}</p>
                 <p className="md:text-5xl text-3xl font-extrabold md:mt-10 mt-5 max-w-lg">I’m Software Engineer at JSM 👋</p>
                 
@@ -30,9 +30,9 @@ const ProfilePage = ({ user }: Props) => (
                 </div>
             </div>
 
-            {user?.projects?.edges?.length > 0 ? (
+            {user ? (
                 <Image
-                    src={user?.projects?.edges[0]?.node?.image}
+                    src={""}
                     alt="project image"
                     width={739}
                     height={554}
@@ -53,19 +53,7 @@ const ProfilePage = ({ user }: Props) => (
            <p className="w-full text-left text-lg font-semibold">Recent Work</p>
            
            <div className="profile_projects">
-                {user?.projects?.edges?.map(
-                    ({ node }: { node: ProjectInterface }) => (
-                        <ProjectCard
-                            key={`${node?._id}`}
-                            id={node?._id}
-                            image={node?.image}
-                            title={node?.title}
-                            name={user.name}
-                            avatarUrl={user.avatarUrl}
-                            userId={user.id}
-                        />
-                    )
-                )}
+               
             </div>
        </section>
    </section>

@@ -19,12 +19,7 @@ type Props = {
 
 const ProjectForm = ({ type, session, project }: Props) => {
     const router = useRouter()
-useEffect(()=>{
-    const email = session.user.email;
-   const data = fetchUserByEmail(email)
-   console.log("data  = " ,data)
 
-},[])
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [form, setForm] = useState<FormState>({
         title: project?.title || "",
@@ -72,8 +67,8 @@ useEffect(()=>{
 
         try {
             if (type === "create") {
-                await CreateProject(form, session?.user?.id, token)
-                console.log(session.user.id)
+                await CreateProject(form, session?.user?._id, token)
+                console.log(session.user._id)
                 router.push("/")
             }
             

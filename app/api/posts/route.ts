@@ -10,45 +10,15 @@ import { headers } from "next/headers";
 
 import { NextRequest, NextResponse } from "next/server";
 
-interface Post {
-    createdBy: string;
+interface FormData {
+    createdBy:string;
     title: string;
     description: string;
     livesiteUrl: string;
     githubUrl: string;
     category: string;
   }
-/*
-const handler= async(req:NextRequest , res:NextResponse) => {
-  if (req.method === 'POST') {
-   await dbConnect()
-    try {
-       
-      const Post= req.body ;
- console.log(req.body)
-    // Validate the incoming data
-    if (//!postData || !postData.title || !postData.description || !postData.livesiteUrl || !postData.githubUrl || !postData.category || !postData.createdBy
-        !Post) {
-        return NextResponse.json({
-          error: 'All fields are required.',
-        } , {status:400});
-      }
-   
-      // Insert post into collection
-      const result = await Project.create({
-  Post
-      });
 
-      // Respond with success
-    return  NextResponse.json({ message: 'Post created', postId: result}, {status:200});
-    } catch (error) {
-        console.log(error)
-     return NextResponse.json({error} , {status:500});
-    }
-  } else {
-  return  NextResponse.json({ message: 'Method not allowed'  }, {status:405});
-  }
-}*/
 
 
 
@@ -63,18 +33,37 @@ interface Project {
   // Add other project fields as necessary
 }
 
-const handler = async (req:NextRequest) => {
+
+
+const handler = async (req:NextRequest,  res: NextApiResponse) => {
   if (req.method === 'POST') {
+
     try {
-        const {title, description , image , githubUrl , livesiteUrl ,category , userId} = await req.json();
-        console.log(req.json)
+
+        // Get the user ID and token from headers
+        const userId = req.headers.get('userId') as string;
+        const token = req.headers.get('token') as string;
+         
+      
+           // console.log(req.headers , "user id backend")
+           //console.log(formData)
+         //  console.log(userId , "id in back")
+         
+        // Ensure token and userId are present (you can add more validation as needed)
+        if (!userId) {
+          return NextResponse.json({ message: 'Missing userId or token' },{status:400});
+        }
+       
+        const {title, description , image , githubUrl , livesiteUrl ,category } = await req.json();
+        //console.log(formData)
         await dbConnect()
         const user = await Users.findById(userId);
         if (!user) {
           return NextResponse.json({ message: 'User not found' },{status:400});
         }
 
-        const newproject = await Project.create({title,description , image , githubUrl , livesiteUrl ,category , createdBy:user._id})
+        const newproject = await Project.create({title,description , image , githubUrl , livesiteUrl ,category , createdBy:userId})
+     //  const newproject = await Project.create(formData)
         if (!newproject) {
             return NextResponse.json({ message: 'Internal error' },{status:400}); 
         }

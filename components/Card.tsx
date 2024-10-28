@@ -11,10 +11,11 @@ type Props = {
     name: string;
     avatarUrl: string;
     userId: string;
+    channelLink: string;
 };
 
 
-const ProjectCard = ({ id, image, title, name, avatarUrl, userId }: Props) => {
+const Card = ({ id, image, title, name, avatarUrl, userId , channelLink }: Props) => {
     const [randomLikes, setRandomLikes] = useState(0);
     const [randomViews, setRandomViews] = useState('');
 
@@ -25,7 +26,7 @@ const ProjectCard = ({ id, image, title, name, avatarUrl, userId }: Props) => {
 
     return (
         <div className="flexCenter flex-col rounded-2xl drop-shadow-card shadow-sm">
-            <Link href={`/project/${id}`} className="flexCenter group relative w-full h-full">
+            <div className="flexCenter group relative w-full h-full cursor-pointer">
                 <Image
                     src={image}
                     width={414}
@@ -37,13 +38,13 @@ const ProjectCard = ({ id, image, title, name, avatarUrl, userId }: Props) => {
                 <div className="hidden group-hover:flex profile_card-title">
                     <p className="w-full">{title}</p>
                 </div>
-            </Link>
+            </div>
 
             <div className="flexBetween w-full px-2 mt-3 font-semibold text-sm">
                 <Link href={`/profile/${userId}`}>
                         <div className="flexCenter gap-2">
                             <Image
-                                src={avatarUrl || '/'}
+                                src={avatarUrl}
                                 width={24}
                                 height={24}
                                 className="rounded-full"
@@ -55,17 +56,16 @@ const ProjectCard = ({ id, image, title, name, avatarUrl, userId }: Props) => {
 
                 <div className="flexCenter gap-3">
                     <div className="flexCenter gap-2">
-                        <Image src="/hearth.svg" width={13} height={12} alt="heart" />
-                        <p className="text-sm">{randomLikes}</p>
+                        <Link href={channelLink} title="Link" className="p-4  text-blue-500 m-3 rounded-xl text-sm font-medium max-md:w-full ">
+                        Link
+                        </Link>
+                       
                     </div>
-                    <div className="flexCenter gap-2">
-                        <Image src="/eye.svg" width={12} height={9} alt="eye" />
-                        <p className="text-sm">{randomViews}</p>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     );
 };
 
-export default ProjectCard;
+export default Card;

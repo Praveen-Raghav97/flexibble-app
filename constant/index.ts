@@ -1,8 +1,8 @@
 export const NavLinks = [
-    { href: '/', key: 'Inspiration', text: 'Inspiration' },
+   
     { href: '/', key: 'Find Projects', text: 'Find Projects' },
     { href: '/Learn-Development', key: 'Learn Development', text: 'Learn Development' },
-    { href: '/', key: 'Career Advancement', text: 'Career Advancement' },
+    { href: '/About-us', key: 'Career Advancement', text: 'About us' },
     { href: '/HireDevelopers', key: 'Hire Developers', text: 'Hire Developers' }
   ];
   

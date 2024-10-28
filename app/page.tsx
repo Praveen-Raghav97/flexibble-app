@@ -33,8 +33,9 @@ export const dynamicParams = true;
 export const revalidate = 0;
 
 
-const  Home = async ({ searchParams: { category } }: Props) => {
-  
+const  Home = async ({ searchParams}: Props) => {
+  const resolvedSearchParams = await searchParams; 
+  const category = resolvedSearchParams?.category;
  
  const data = await getAllProjectDetails(category) ;
 // console.log(data)

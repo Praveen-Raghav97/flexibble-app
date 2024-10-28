@@ -5,29 +5,29 @@ import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import img from '../public/profile-post.png'
 
 import { SessionInterface } from "@/commom.types";
-import { fetchToken } from "@/lib/Session";
+import { fetchToken, getUser } from "@/lib/Session";
+import { user } from "@nextui-org/react";
 
 const ProfileMenu = ({ session }: { session: SessionInterface }) => {
     const [openModal, setOpenModal] = useState(false);
-
-    useEffect(()=>{
-       // fetchToken()
-      //  console.log(fetchToken)
-      })
+     const [userdata , setUserdata] = useState();
+  
     return (
         <div className="flexCenter z-10 flex-col relative">
             <Menu as="div">
                 <Menu.Button className="flexCenter" onMouseEnter={() => setOpenModal(true)} >
-                    {session?.user?.image && (
-                        <Image
-                            src={""}
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                            alt="user profile image"
-                        />
+                   {session?.user.image && (
+                   <Image
+                   src={session.user.image || img}
+                   width={40}
+                   height={40}
+                   className="rounded-full"
+                   alt="user profile image"
+               />
+                        
                     )}
                 </Menu.Button>
 
@@ -61,13 +61,13 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
 
                         <div className="flex flex-col gap-3 pt-10 items-start w-full">
                             <Menu.Item>
-                                <Link href={`/profile/${session?.user?.id}`} className="text-sm">Work Preferences</Link>
+                                <Link href={`/profile/${session?.user?._id}`} className="text-sm">Work Preferences</Link>
                             </Menu.Item>
                             <Menu.Item>
-                                <Link href={`/profile/${session?.user?.id}`} className="text-sm">Settings</Link>
+                                <Link href={`/profile/${session?.user?._id}`} className="text-sm">Settings</Link>
                             </Menu.Item>
                             <Menu.Item>
-                                <Link href={`/profile/${session?.user?.id}`} className="text-sm">Profile</Link>
+                                <Link href={`/profile/${session?.user._id}`} className="text-sm">Profile</Link>
                             </Menu.Item>
                         </div>
                         <div className="w-full flexStart border-t border-nav-border mt-5 pt-5">

@@ -1,6 +1,6 @@
 import Model from '@/components/Model'
 import ProjectForm from '@/components/ProjectForm'
-import { fetchUserByEmail, getCurrentUser } from '@/lib/Session'
+import { getCurrentUser } from '@/lib/Session'
 import { redirect } from 'next/navigation'
 import React from 'react'
 

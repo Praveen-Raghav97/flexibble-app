@@ -9,12 +9,15 @@ import { JWT } from "next-auth/jwt";
 import { SessionInterface, UserProfile } from "@/commom.types";
 import dbConnect from '@/lib/mongodb';
 import EmailProvider from 'next-auth/providers/email';
-
-
+SignIn
+import bcrypt, { compare } from 'bcryptjs'
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { AdapterUser } from 'next-auth/adapters';
 import { NextResponse } from 'next/server';
 import Users from '@/lib/modals/User';
+import SignIn from '../../../../components/signin';
+SignIn
+
 
 
 
@@ -33,8 +36,44 @@ interface Session {
       image?: string;
     };
 }
+
+
 export const options: NextAuthOptions = {
+
     providers: [
+
+// Credentials provider for phone authentication or custom credentials
+      CredentialsProvider({
+        name: 'Email',
+        credentials: {
+          email: { label: 'Email', type: 'email', placeholder: 'Enter your Email' },
+          password: { label: 'Password', type: 'password' },
+        },
+        async authorize(credentials) {
+          if (!credentials) return null;
+
+          await dbConnect();
+          // Here, validate the user's phone number and password against your backend API
+             console.log(credentials)
+
+       // Logic for authenticating the user
+       const user = await Users.findOne({ email: credentials.email });
+
+       if (!user) {
+        throw new Error("No user found with the entered email");
+      }
+
+     // const isValidPassword = await compare(credentials.password, user.password);
+     // if (!isValidPassword) {
+     //   throw new Error("Invalid password");
+     // }
+
+      return { id: user._id, email: user.email, name: user.name };
+    },
+  }),
+
+  
+
         GitHubProvider({
             clientId: process.env.GITHUB_CLIENT_ID as string,
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
@@ -50,28 +89,78 @@ export const options: NextAuthOptions = {
     }),
     
         
- // Credentials provider for phone authentication or custom credentials
+ 
 
- CredentialsProvider({
-  name: 'Phone or Username',
-  credentials: {
-    phone: { label: 'Phone', type: 'text', placeholder: 'Enter your phone' },
-    password: { label: 'Password', type: 'password' },
-  },
-  async authorize(credentials) {
-    // Here, validate the user's phone number and password against your backend API
-    const user = { id: '1', name: 'User', phone: credentials?.phone };
-    if (user) return user;
-    return null;
-  },
-})  
+
 
         
         ],
-        pages: {
-          signIn: '/auth/signIn', // Customize the sign-in page path
+
+        pages:{
+          signIn:'/signin'
+       //   signup:'/signup'
+        },
+      
+theme:{
+  colorScheme:'light',
+  brandColor: 'black',
+
+
+  
+}
+, 
+        callbacks: {
+          async jwt({ token, account }) {
+            // Persist the OAuth access_token to the token right after signin
+            if (account) {
+              token.accessToken = account.access_token
+            }
+            return token
+          },
+          async session({ session, token , user }) {
+            // Send properties to the client, like an access_token from a provider.
+            const email = session?.user?.email as string;
+            let data = await Users.findOne({email}).lean() as {
+              _id: string; user?: UserProfile 
+}
+           
+             
+           //console.log("i am data" , data)
+
+            const newSession = {
+              ...session,
+              user:{
+               // data,
+                _id: data._id.toString(),
+               ...session.user
+              }
+        
+           
+            };
+      
+          return newSession;
+          },
+
+          async signIn({ user }) {
+         
+         
+            try {
+              const userExists = await getUser(user?.email as string) as { user?: UserProfile }
+              
+              if (!userExists.user) {
+                await createUser(user.name as string, user.email as string, user.image as string)
+              }
+      
+              return true;
+            } catch (error: any) {
+              console.log("Error checking if user exists: ", error.message);
+              return false;
+            }
+          },
         },
     
+      
+
 
   
 
@@ -110,7 +199,7 @@ export const getUser = async(email: string) => {
  // client.setHeader("x-api-key", apiKey);
  let existsUser
  try {
-    existsUser = await Users.findOne({email:email})
+    existsUser = await Users.findOne({email:email}).lean()
    
  }
   catch (error) {

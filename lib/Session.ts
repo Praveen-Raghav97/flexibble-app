@@ -1,6 +1,8 @@
 import { getServerSession } from "next-auth";
 import { ProjectForm, SessionInterface } from "@/commom.types";
 import { options } from "@/app/api/auth/[...nextauth]/option";
+import Users from "./modals/User";
+import dbConnect from "./mongodb";
 
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -8,15 +10,31 @@ const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL : 'http://lo
 
 export async function getCurrentUser() {
 const session = await getServerSession(options) as SessionInterface
-console.log( "i am session on frontend " ,session)
+//console.log( "i am session on frontend " ,session)
  return session
 }
+export const getUserbyID =async (id:string) =>{
+  await dbConnect()
+ try {
+    let existingUser = await Users.findById(id).lean();
+    if (!existingUser) {
+      alert("User Not Found")
+      console.log("user not found")
+    }
+    return existingUser
+ } catch (error) {
+  return (error)
+ }
+
+}
+
+
 export const getUserProjects = (id: string, last?: number) => {
    
   };
-  export const getUser = (email: string) => {
-   
-  };
+ 
+
+ 
 
 export const fetchToken = async () => {
     try {
@@ -44,13 +62,15 @@ export const uploadImage = async (imagePath: string) => {
 
 
 export async function CreateProject(form: ProjectForm, creatorId: string, token: string) {
-    
+     console.log(creatorId , "id on frontend")
+     let userId = creatorId;
   try {
-    const res = await fetch('/api/posts',{
+    const res = await fetch(`${serverUrl}/api/posts`,{
       method:'POST',
       headers:{
-        userId:creatorId,
-         token:token
+        'Content-Type': 'application/json', // Important for JSON parsing
+        userId,
+         token,
       },
 
       body:JSON.stringify(form)

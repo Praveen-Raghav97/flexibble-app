@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SessionProvider } from "next-auth/react";
 
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,9 +24,7 @@ export default function RootLayout({
     <body>
       <Navbar />
       <main>
-      
-        {children}
-       
+      {children}
      
       </main>
       <Footer />
