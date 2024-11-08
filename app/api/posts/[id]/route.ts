@@ -8,7 +8,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     const { id } = params;
   console.log(id)
     // Simulated data fetch based on ID
-    const project = await Project.findById(id); // Replace this with your actual database fetching logic
+    const project = await Project.findById(id).populate('createdBy'); // Replace this with your actual database fetching logic
    
     if (project) {
       return NextResponse.json({project:project},{status:200});

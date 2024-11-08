@@ -5,15 +5,18 @@ import Link from 'next/link'
 import Button from "./Button";
 import ProjectCard from './ProjectCard';
 
+
 type Props = {
     user: UserProfiles;
 }
 
+
 const ProfilePage = ({ user }: Props) => (
+  
     <section className='flexCenter flex-col max-w-10xl w-full mx-auto paddings'>
         <section className="flexBetween max-lg:flex-col gap-10 w-full">
             <div className='flex items-start flex-col w-full'>
-                <Image src={user?.image || ""} width={80} height={80} className="rounded-full" alt="user image" />
+                <Image src={user?.image} width={80} height={80} className="rounded-full" alt="user image" />
                 <p className="text-4xl font-bold mt-10">{user?.name}</p>
                 <p className="md:text-5xl text-3xl font-extrabold md:mt-10 mt-5 max-w-lg">I’m Software Engineer at JSM 👋</p>
                 
@@ -30,9 +33,9 @@ const ProfilePage = ({ user }: Props) => (
                 </div>
             </div>
 
-            {user ? (
+            {user? (
                 <Image
-                    src={""}
+                    src={"/profile-post.png"}
                     alt="project image"
                     width={739}
                     height={554}

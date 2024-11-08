@@ -16,12 +16,12 @@ const session = await getServerSession(options) as SessionInterface
 export const getUserbyID =async (id:string) =>{
   await dbConnect()
  try {
-    let existingUser = await Users.findById(id).lean();
-    if (!existingUser) {
+    let user = await Users.findById(id).lean();
+    if (!user) {
       alert("User Not Found")
       console.log("user not found")
     }
-    return existingUser
+    return {user}
  } catch (error) {
   return (error)
  }

@@ -61,9 +61,9 @@ const  Home = async ({ searchParams}: Props) => {
             id={data._id}
             image={data.image}
             title={data.title}
-            name={""}
-            avatarUrl={""}
-            userId={""}
+            name={data?.createdBy?.name}
+            avatarUrl={data?.createdBy?.image}
+            userId={data?.createdBy?._id}
           />
         ))}
 

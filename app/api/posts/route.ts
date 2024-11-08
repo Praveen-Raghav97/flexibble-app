@@ -92,7 +92,7 @@ console.log(category)
     if (req.method === 'GET') {
     try {
        await dbConnect()
-       const projects = await Project.find({category});
+       const projects = await Project.find({category}).populate('createdBy' );
        if (!projects || projects.length === 0) {
         return NextResponse.json({message:"No Projects Found"},{status:400})
        }

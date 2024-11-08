@@ -8,7 +8,8 @@ module.exports = {
   },
   reactStrictMode: true,
   images: {
-    domains: ['s3-alpha.figma.com', 'letsenhance.io'], // Add any additional domains here
+    domains: ['avatars.githubusercontent.com','s3-alpha.figma.com', 'letsenhance.io'],
+  
     remotePatterns: [
       {
         protocol: 'https',

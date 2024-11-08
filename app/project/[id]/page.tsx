@@ -1,6 +1,7 @@
+
 import Image from "next/image"
 import Link from "next/link"
-import {fetchProjectById} from '../../../lib/Session'
+import {fetchProjectById, getUserbyID} from '../../../lib/Session'
 import { getCurrentUser } from "@/lib/session"
 import { getAllProjectDetails } from "@/lib/Session"
 import Model from "@/components/Model"
@@ -8,10 +9,15 @@ import ProjectActions from "@/components/ProjectActions"
 import RelatedProjects from "@/components/RelatedProjects"
 import { ProjectInterface } from "@/commom.types"
 
-const Project = async ({ params: { id } }: { params: { id: string } }) => {
+const Project = async ({params}:any) => {
+    
+  
+  // asynchronous access of `params.id`.
+  const { id } = await params
+  // Simulate awaiting `params.id`
     const session = await getCurrentUser()
     const result = await fetchProjectById(id) as { project?: ProjectInterface}
-//  console.log(result , "i am result")
+  console.log(result , "i am result")
     if (!result?.project) return (
         <p className="no-result-text">Failed to fetch project info</p>
     )
@@ -26,7 +32,7 @@ const Project = async ({ params: { id } }: { params: { id: string } }) => {
                 <div className="flex-1 flex items-start gap-5 w-full max-xs:flex-col">
                     <Link href={renderLink()}>
                         <Image
-                            src={projectDetails?.createdBy?.avatarUrl}
+                            src={projectDetails?.createdBy?.image}
                             width={50}
                             height={50}
                             alt="profile"
@@ -87,7 +93,7 @@ const Project = async ({ params: { id } }: { params: { id: string } }) => {
                 <span className="w-full h-0.5 bg-light-white-200" />
                 <Link href={renderLink()} className="min-w-[82px] h-[82px]">
                     <Image
-                        src={projectDetails?.createdBy?.avatarUrl}
+                        src={projectDetails?.createdBy?.image}
                         className="rounded-full"
                         width={82}
                         height={82}
