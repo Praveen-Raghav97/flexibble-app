@@ -11,14 +11,31 @@ type Props = {
 }
 
 
-const ProfilePage = ({ user }: Props) => (
+const ProfilePage = ({ user }: Props) =>{
+
+
+    const processedProjects = user?.projects?.map((project: any) => ({
+        ...project,
+        _id: project._id.toString(), // Convert ObjectId to string
+        createdBy: {
+          ...project.createdBy,
+          _id: project.createdBy._id?.toString(),
+        },
+      }));
+
+
+  let userId = user._id.toString()
+
+    return(
+
+
   
     <section className='flexCenter flex-col max-w-10xl w-full mx-auto paddings'>
         <section className="flexBetween max-lg:flex-col gap-10 w-full">
             <div className='flex items-start flex-col w-full'>
                 <Image src={user?.image} width={80} height={80} className="rounded-full" alt="user image" />
                 <p className="text-4xl font-bold mt-10">{user?.name}</p>
-                <p className="md:text-5xl text-3xl font-extrabold md:mt-10 mt-5 max-w-lg">I’m Software Engineer at JSM 👋</p>
+                <p className="md:text-5xl text-3xl font-extrabold md:mt-10 mt-5 max-w-lg">I’m Software Engineer at Google 👋</p>
                 
                 <div className="flex mt-8 gap-5 w-full flex-wrap">
                     <Button 
@@ -56,10 +73,21 @@ const ProfilePage = ({ user }: Props) => (
            <p className="w-full text-left text-lg font-semibold">Recent Work</p>
            
            <div className="profile_projects">
-               
+           {processedProjects.map((data:any) => (
+
+<ProjectCard
+key={data._id}
+id={data._id}
+image={data.image}
+title={data.title}
+name={user?.name}
+avatarUrl={user?.image}
+userId={userId}
+/>
+))}
             </div>
        </section>
    </section>
 )
-
+}
 export default ProfilePage

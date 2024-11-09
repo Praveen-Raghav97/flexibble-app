@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models, Document } from 'mongoose';
+import mongoose, { Schema, model, models, Document, Types } from 'mongoose';
 import Users from './User';
 
 export interface IProject extends Document {
@@ -8,7 +8,7 @@ export interface IProject extends Document {
   livesiteUrl:string;
   githubUrl:string;
   category:string;
-  createdBy:String;
+  createdBy: Types.ObjectId; // Reference to User model
 
 }
 
@@ -20,7 +20,7 @@ const projectSchema = new Schema<IProject>({
   githubUrl: { type: String, required: true },
   category: { type: String, required: true },
   createdBy: { 
-  type:mongoose.Types.ObjectId,
+  type:mongoose.Schema.Types.ObjectId,
   ref:"Users"
   },
 });

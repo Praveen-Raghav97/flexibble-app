@@ -1,4 +1,5 @@
 import { User, Session } from 'next-auth'
+import { Project } from 'next/dist/build/swc/types';
 
 export type FormState = {
     title: string;
@@ -21,12 +22,13 @@ export interface ProjectInterface {
       name: string;
       email: string;
       avatarUrl: string;
-      id: string;
+      _id: string;
     };
 }
 
 export interface UserProfiles {
-  [key: string]: string | null; // Allow null values
+    [x: string]: any;
+ // [key: string]: string | null; // Allow null values
     
     id: string;
     name: string;
@@ -35,7 +37,7 @@ export interface UserProfiles {
     avatarUrl: string;
     githubUrl: string | null;
     linkedinUrl: string | null;
-   
+    projects: Project[];
       
     };
 

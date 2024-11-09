@@ -14,10 +14,11 @@ const Project = async ({params}:any) => {
   
   // asynchronous access of `params.id`.
   const { id } = await params
+  
   // Simulate awaiting `params.id`
     const session = await getCurrentUser()
     const result = await fetchProjectById(id) as { project?: ProjectInterface}
-  console.log(result , "i am result")
+  //console.log(result , "i am result")
     if (!result?.project) return (
         <p className="no-result-text">Failed to fetch project info</p>
     )
@@ -25,12 +26,13 @@ const Project = async ({params}:any) => {
     const projectDetails = result?.project
 
     const renderLink = () => `/profile/${projectDetails?.createdBy?.id}`
-
+  let userId = projectDetails.createdBy._id
+ // console.log(userId , "i am id")
     return (
         <Model>
             <section className="flexBetween gap-y-8 max-w-4xl max-xs:flex-col w-full">
                 <div className="flex-1 flex items-start gap-5 w-full max-xs:flex-col">
-                    <Link href={renderLink()}>
+                    <Link href={`/profile/${userId}`}>
                         <Image
                             src={projectDetails?.createdBy?.image}
                             width={50}
@@ -39,13 +41,13 @@ const Project = async ({params}:any) => {
                             className="rounded-full"
                         />
                     </Link>
-
+      
                     <div className="flex-1 flexStart flex-col gap-1">
                         <p className="self-start text-lg font-semibold">
                             {projectDetails?.title}
                         </p>
                         <div className="user-info">
-                            <Link href={renderLink()}>
+                            <Link href={`/profile/${userId}`}>
                                 {projectDetails?.createdBy?.name}
                             </Link>
                             <Image src="/dot.svg" width={4} height={4} alt="dot" />
@@ -91,7 +93,7 @@ const Project = async ({params}:any) => {
       
             <section className="flexCenter w-full gap-8 mt-28">
                 <span className="w-full h-0.5 bg-light-white-200" />
-                <Link href={renderLink()} className="min-w-[82px] h-[82px]">
+                <Link href={`/profile/${userId}`} className="min-w-[82px] h-[82px]">
                     <Image
                         src={projectDetails?.createdBy?.image}
                         className="rounded-full"
@@ -103,7 +105,7 @@ const Project = async ({params}:any) => {
                 <span className="w-full h-0.5 bg-light-white-200" />
             </section>
 
-            <RelatedProjects userId={projectDetails?.createdBy?.id} projectId={projectDetails?.id} />
+            <RelatedProjects userId={projectDetails?.createdBy?._id} projectId={projectDetails?._id} />
         </Model>
     )
 }

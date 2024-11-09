@@ -40,7 +40,7 @@ const Card = ({ id, image, title, name, avatarUrl, userId , channelLink }: Props
                 </div>
             </div>
 
-            <div className="flexBetween w-full px-2 mt-3 font-semibold text-sm">
+            <div className="flexBetween w-full px-2  font-semibold text-sm">
                 <Link href={`/profile/${userId}`}>
                         <div className="flexCenter gap-2">
                             <Image

@@ -6,7 +6,7 @@ import ProjectCard from "@/components/ProjectCard";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 
-import { fetchToken } from "@/lib/Session";
+import { fetchToken, getAllProject, getAllProjects } from "@/lib/Session";
 import { getAllProjectDetails } from "@/lib/Session";
 
 
@@ -36,9 +36,39 @@ export const revalidate = 0;
 const  Home = async ({ searchParams}: Props) => {
   const resolvedSearchParams = await searchParams; 
   const category = resolvedSearchParams?.category;
+
+let data;
+
+   data = await getAllProjectDetails(category) ;
+//console.log(data)
+
+let res;
+ res = await getAllProjects();
  
- const data = await getAllProjectDetails(category) ;
-// console.log(data)
+console.log(res, "i am res")
+/* if (c) {
+  return (
+    <section className="flexStart flex-col paddings">
+      <Categories />
+
+      <section className="projects-grid mt-30" >
+        {res?.map((data:any) => (
+            <ProjectCard
+            key={data._id}
+            id={data._id}
+            image={data?.image}
+            title={data.title}
+            name={data?.createdBy?.name}
+            avatarUrl={data?.createdBy?.image}
+            userId={data?.createdBy?._id}
+          />
+        ))}
+
+
+      </section>
+    </section>
+  )
+}*/
   
   if (!data) {
     return (
@@ -49,6 +79,9 @@ const  Home = async ({ searchParams}: Props) => {
       </section>
     )
   }
+
+
+
 
   return (
   <section className="flex-start flex-col paddings mb-36">
@@ -70,12 +103,7 @@ const  Home = async ({ searchParams}: Props) => {
 
       </section>
 
-      <LoadMore 
-        startCursor={data?.projectSearch?.pageInfo?.startCursor} 
-        endCursor={data?.projectSearch?.pageInfo?.endCursor} 
-        hasPreviousPage={data?.projectSearch?.pageInfo?.hasPreviousPage} 
-        hasNextPage={data?.projectSearch?.pageInfo.hasNextPage}
-      />
+     
   </section>
   );
 }

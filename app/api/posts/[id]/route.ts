@@ -1,6 +1,6 @@
 import Project from "@/lib/modals/Project";
 import dbConnect from "@/lib/mongodb";
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET PROJECT BY Id request handler to remove a project by ID
@@ -18,18 +18,28 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   }  
  // DELETE request handler to remove a project by ID
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  // Extract the 'id' from the URL query
   const { id } = params;
-
-  // Find index of project with matching ID
-  let existProject = await Project.findByIdAndDelete(id)
-
-  if (!existProject) {
-    return NextResponse.json({ message: 'Project not found' }, { status: 404 });
-  }
-
-
-  return NextResponse.json({ message: 'Project deleted successfully' }, { status: 200 });
+console.log(id)
+if (!id) {
+       return NextResponse.json({ error: "ID parameter is missing" }, { status: 400 });
 }
+try {
+    // Find index of project with matching ID
+    await dbConnect()
+    let existProject = await Project.findByIdAndDelete(id)
+  
+    if (!existProject) {
+      return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+    }
+  
+  
+    return NextResponse.json({ message: 'Project deleted successfully' }, { status: 200 });
+} catch (error) {
+  console.log(error)
+}
+}
+
 // EDIT request handler to remove a project by ID
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
     const { id } = params;

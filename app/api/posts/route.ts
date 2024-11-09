@@ -105,9 +105,29 @@ console.log(category)
       return NextResponse.json({ message: 'Method not allowed' },{status:405});
     }
   };
+  const GetAllProjects = async (req:NextRequest) => {
+    
+      if (req.method === 'GET') {
+      try {
+         await dbConnect()
+         const projects = await Project.find({}).populate('createdBy' );
+         if (!projects || projects.length === 0) {
+          return NextResponse.json({message:"No Projects Found"},{status:400})
+         }
+         return NextResponse.json(projects,{status:200})
+      } catch (error) {
+          return NextResponse.json({error},{status:500})
+      }
+     
+      } else {
+        return NextResponse.json({ message: 'Method not allowed' },{status:405});
+      }
+    };
+
+
   
 export {handler  as POST};
-export {GetProjects  as GET};
+export {GetProjects as GET};
 
 
 //export { handler as POST };

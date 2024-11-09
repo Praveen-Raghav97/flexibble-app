@@ -3,6 +3,7 @@ import { ProjectForm, SessionInterface } from "@/commom.types";
 import { options } from "@/app/api/auth/[...nextauth]/option";
 import Users from "./modals/User";
 import dbConnect from "./mongodb";
+import Project from "./modals/Project";
 
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -16,7 +17,7 @@ const session = await getServerSession(options) as SessionInterface
 export const getUserbyID =async (id:string) =>{
   await dbConnect()
  try {
-    let user = await Users.findById(id).lean();
+    let user = await Users.findById(id).lean().populate('projects');
     if (!user) {
       alert("User Not Found")
       console.log("user not found")
@@ -176,6 +177,37 @@ export const updateProject = async (form: ProjectForm, projectId: string, token:
      console.log(error)
     }
   return data
+  };
+  export const getAllProjects = async () => {
+    let data;
+   
+    try {
+      const response = await fetch(`${serverUrl}/api/posts`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch projects');
+      }
+       data = await response.json();
+     // console.log(data)
+      return data
+    } catch (error: any) {
+     console.log(error)
+    }
+  return data
+  };
+  export const getAllProject = async () => {
+   
+    let data;
+   
+    try {
+      await dbConnect()
+      data = await  Project.find({});
+      return data
+    } catch (error) {
+      console.log(error)
+      
+    }
+  
+return data
   };
 
  export const fetchProjectById = async (id:any) => {

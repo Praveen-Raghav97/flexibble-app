@@ -14,7 +14,7 @@ const UserProfile = async ({ params }: Props)=> {
   let {id} = await params;
  // console.log(params.id)
     const result = await getUserbyID(id)  as {user : UserProfiles}
-  console.log(result.user , "result")
+  //console.log(result.user , "result")
     if (!result?.user) return (
         <p className="no-result-text">Failed to fetch user info</p>
     )

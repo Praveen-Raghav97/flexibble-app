@@ -1,8 +1,10 @@
 import Link from 'next/link'
 
-import { getUserProjects } from '@/lib/Session'
-import { ProjectInterface, UserProfile } from '@/commom.types'
+import { getUserbyID, getUserProjects } from '@/lib/Session'
+import { ProjectInterface, UserProfiles } from '@/commom.types'
 import Image from 'next/image'
+import ProjectCard from './ProjectCard'
+import { user } from '@nextui-org/react'
 
 type Props = {
     userId: string
@@ -10,21 +12,29 @@ type Props = {
 }
 
 const RelatedProjects = async ({ userId, projectId }: Props) => {
-    const result = await getUserProjects(userId) as unknown as { user?: UserProfile}
+    const result = await getUserbyID(userId) as {user : UserProfiles}
+       
 
-    const filteredProjects = result?.user?.projects?.edges
-        ?.filter(({ node }: { node: ProjectInterface }) => node?.id !== projectId)
-
-    if (filteredProjects?.length === 0) return null;
-
+ // console.log(result , "result of reledted")
+     let projects = result.user.projects
+ 
+     const processedProjects = result?.user?.projects?.map((project: any) => ({
+        ...project,
+        _id: project._id.toString(), // Convert ObjectId to string
+        createdBy: {
+          ...project.createdBy,
+          _id: project.createdBy._id?.toString(),
+        },
+      }));
+      //console.log(processedProjects)
     return (
         <section className="flex flex-col mt-32 w-full">
             <div className="flexBetween">
-                <p className="text-base font-bold">
+                <p className=" text-left text-lg font-semibold">
                     More by {result?.user?.name}
                 </p>
                 <Link
-                    href={`/profile/${result?.user?.id}`}
+                    href={`/profile/${result?.user?._id}`}
                     className="text-primary-purple text-base"
                 >
                     View All
@@ -32,17 +42,18 @@ const RelatedProjects = async ({ userId, projectId }: Props) => {
             </div>
 
             <div className="related_projects-grid">
-                {filteredProjects?.map(({ node }: { node: ProjectInterface }) => (
-                    <div className="flexCenter related_project-card drop-shadow-card">
-                    <Link href={`/project/${node?.id}`} className="flexCenter group relative w-full h-full">
-                        <Image src={node?.image} width={414} height={314} className="w-full h-full object-cover rounded-2xl" alt="project image" />
-        
-                        <div className="hidden group-hover:flex related_project-card_title">
-                            <p className="w-full">{node?.title}</p>
-                        </div>
-                    </Link>
-                    </div>
-                ))}
+            {processedProjects.slice(0,4).map((data:any) => (
+
+            <ProjectCard
+            key={data._id}
+            id={data._id}
+            image={data.image}
+            title={data.title}
+            name={result?.user?.name}
+            avatarUrl={result?.user?.image}
+            userId={userId}
+          />
+        ))}
             </div>
         </section>
     )
