@@ -1,14 +1,15 @@
-'use client'
+"use client"
 
 import { signIn } from 'next-auth/react';  // NextAuth signIn function
 import { Button, TextField, Typography, Box, Container } from '@mui/material';  // Material UI components
 import { FaGoogle, FaLinkedin, FaGithub } from 'react-icons/fa';  // Icons from react-icons
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -25,6 +26,7 @@ const SignIn = () => {
       console.error(res.error);
       alert("Failed to login: " + res.error);
     } else {
+     
       // On success, redirect to dashboard
       window.location.href = "/";
     }
@@ -34,10 +36,10 @@ const SignIn = () => {
     <Container maxWidth="lg" className="flex justify-center items-center min-h-screen p-4">
       <Box className="bg-white p-6  rounded-lg w-full sm:max-w-md md:max-w-md lg:max-w-md xl:max-w-sm ">
         <Typography variant="h6" className="text-start mb-2  text-md sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">
-          Welcome Flex
+          Welcome
         </Typography>
         <Typography variant="h5" className="text-start mb-8 text-gray  text-sm sm:text-sm md:text-sm lg:text-sm xl:text-sm">
-          Log into flex to continue browsing.
+          Continue into flex to continue browsing.
         </Typography>
        <form onSubmit={handleSubmit}>
   {/* Email Input */}

@@ -1,90 +1,181 @@
 'use client'
 
-import { signIn } from 'next-auth/react';  // NextAuth signIn function
-import { Button, TextField, Typography, Box, Container } from '@mui/material';  // Material UI components
-import { FaGoogle, FaLinkedin, FaGithub } from 'react-icons/fa';  // Icons from react-icons
+import { signIn } from 'next-auth/react'; // NextAuth signIn function
+import { Button, TextField, Typography, Box, Container } from '@mui/material'; // Material UI components
+import { useState } from 'react';
 
 const SignUp = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    image: null,
+  });
+
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, files } = e.target;
+
+    if (type === 'file') {
+      if (files && files[0]) {
+        setFormData((prevData: any) => ({
+          ...prevData,
+          image: files[0],
+        }));
+        setFilePreview(URL.createObjectURL(files[0])); // Set the preview URL
+      }
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(formData, ' i am data');
+  };
+
   return (
-    <Container maxWidth="lg" className="flex justify-center items-center min-h-screen p-4">
-      <Box className="bg-white p-6 shadow-lg rounded-lg  sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-sm ">
-        <Typography variant="h6" className="text-start mb-2  text-md sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">
-          Welcome Flex
+    <Container maxWidth="sm" className="flex justify-center items-center min-h-screen p-4">
+      <Box
+        sx={{
+          p: { xs: 2, sm: 4 },
+          borderRadius: 2,
+          width: '100%',
+          maxWidth: { xs: '100%', sm: '500px' },
+          boxShadow: 3,
+        }}
+      >
+        <Typography variant="h6" textAlign="center" sx={{ mb: 1 }}>
+          Welcome
         </Typography>
-        <Typography variant="h5" className="text-start mb-8 text-gray  text-sm sm:text-sm md:text-sm lg:text-sm xl:text-sm">
-          Signup into flex to continue browsing.
+        <Typography variant="body2" textAlign="center" sx={{ mb: 4, color: 'gray' }}>
+          Signup into Flex to continue browsing.
         </Typography>
-        {/* Name Input */}
-        <TextField
-          label="Name"
-          variant="outlined"
-          fullWidth
-          className="mb-4"
-        />
 
-        {/* Email Input */}
-        <TextField
-          label="Email"
-          type="email"
-          variant="outlined"
-          fullWidth
-          className="mb-4"
-        />
+        <form onSubmit={handleSubmit}>
+          {/* Name Input */}
+          <TextField
+            label="Name"
+            name="name"
+            variant="outlined"
+            fullWidth
+            sx={{ mb: 2 }}
+            value={formData.name}
+            required
+            onChange={handleChange}
+          />
 
-        {/* Password Input */}
-        <TextField
-          label="Password"
-          type="password"
-          variant="outlined"
-          fullWidth
-          className="mb-6"
-        />
-         <Button
-         
-         fullWidth
-         variant="outlined"
-        
-         className="mb-4 text-white bg-green-600 hover:bg-green-400 transition-all"
-       >
-         Continue
-       </Button>
-  <br />
-                 <p className='text-center  mb-1'>OR</p>
-        {/* Social Sign Up Buttons */}
-        <Button
-         
-          fullWidth
-          variant="outlined"
-          startIcon={<FaGoogle className='text-orange-500'/>}
-          className="mb-4 text-black border-gray hover:bg-blue-50 transition-all"
-        >
-          Continue with Google
-        </Button>
+          {/* Email Input */}
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            variant="outlined"
+            fullWidth
+            sx={{ mb: 2 }}
+            value={formData.email}
+            required
+            onChange={handleChange}
+          />
 
-        <Button
-        
-          fullWidth
-          variant="outlined"
-          startIcon={<FaLinkedin className='text-blue-500' />}
-          className="mb-4 text-black border-gray hover:bg-blue-50 transition-all"
-        >
-          Continue with LinkedIn
-        </Button>
+          {/* Password Input */}
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            sx={{ mb: 3 }}
+            value={formData.password}
+            required
+            onChange={handleChange}
+          />
 
-        <Button
-         
-          fullWidth
-          variant="outlined"
-          startIcon={<FaGithub />}
-          className="text-black border-gray hover:bg-gray-50 transition-all"
-        >
-          Continue with GitHub
-        </Button>
-        <Typography variant="h5" className="text-center mt-8 text-blue-400  text-sm sm:text-sm md:text-sm lg:text-sm xl:text-sm cursor-pointer">
-          Already have an account ?  <span className='text-blue-500 text-bold underline p-1 cursor-pointer'>Sign In </span>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              mb: 2,
+              bgcolor: 'green.600',
+              color: 'white',
+              '&:hover': { bgcolor: 'green.400' },
+            }}
+          >
+            Continue
+          </Button>
+        </form>
+
+        <Typography textAlign="center" sx={{ my: 2 }}>
+          OR
         </Typography>
-        <Typography variant="h5" className="text-center mt-8 text-gray  text-sm sm:text-sm md:text-sm lg:text-sm xl:text-sm">
-          By Signup in, you agree to <span className='text-black underline  cursor-pointer'>Term and policy</span> .
+
+        {/* Image Upload Field */}
+        <label htmlFor="image-upload">
+          <Typography variant="body2" sx={{ mb: 1, textAlign: 'center' }}>
+            Profile Image
+          </Typography>
+          <input
+            id="image-upload"
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+            style={{ display: 'none' }}
+          />
+          <Button
+            variant="outlined"
+            component="span"
+            fullWidth
+            onClick={() => document.getElementById('image-upload')?.click()}
+          >
+            Choose File
+          </Button>
+        </label>
+
+        {filePreview && (
+          <Box mt={2} display="flex" justifyContent="center">
+            <img
+              src={filePreview}
+              alt="Preview"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                width: '100%',
+                maxWidth: '400px',
+                borderRadius: '10px',
+              }}
+            />
+          </Box>
+        )}
+
+        <Typography
+          variant="body2"
+          textAlign="center"
+          sx={{
+            mt: 4,
+            color: 'blue.400',
+            '& span': { color: 'blue.500', fontWeight: 'bold', textDecoration: 'underline' },
+            cursor: 'pointer',
+          }}
+        >
+          Already have an account? <span>Sign In</span>
+        </Typography>
+
+        <Typography
+          variant="body2"
+          textAlign="center"
+          sx={{
+            mt: 2,
+            color: 'gray',
+            '& span': { color: 'black', textDecoration: 'underline', cursor: 'pointer' },
+          }}
+        >
+          By signing up, you agree to our <span>Terms and Policy</span>.
         </Typography>
       </Box>
     </Container>

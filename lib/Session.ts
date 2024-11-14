@@ -63,7 +63,7 @@ export const uploadImage = async (imagePath: string) => {
 
 
 export async function CreateProject(form: ProjectForm, creatorId: string, token: string) {
-     console.log(creatorId , "id on frontend")
+    // console.log(creatorId , "id on frontend")
      let userId = creatorId;
   try {
     const res = await fetch(`${serverUrl}/api/posts`,{
@@ -237,3 +237,25 @@ return data
       console.error('Error fetching user:', error);
     }
   };
+
+  export const SignupUser = async (form:any) =>{
+       let user ;
+       try {
+
+        
+        user = await Users.create({
+          name:name,
+          email:email,
+          password: hashpassword,
+          image: imurl,
+
+        })
+        if (!user) {
+          return("user not create")
+        }
+        return(user)
+       } catch (error) {
+        console.log(error)
+       }
+
+  }

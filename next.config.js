@@ -1,14 +1,24 @@
 module.exports = {
-
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.(mp4|webm|ogg|avi)$/,
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/media/[name].[hash][ext]',
+      },
+    });
+    return config;
+  },
   webpack: (config) => {
     config.cache = {
       type: "memory",
     };
     return config;
   },
+  
   reactStrictMode: true,
   images: {
-    domains: ['avatars.githubusercontent.com','s3-alpha.figma.com', 'letsenhance.io'],
+    domains: ['avatars.githubusercontent.com','s3-alpha.figma.com', 'letsenhance.io','res.cloudinary.com'],
   
     remotePatterns: [
       {

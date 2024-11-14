@@ -45,7 +45,7 @@ let data;
 let res;
  res = await getAllProjects();
  
-console.log(res, "i am res")
+//console.log(res, "i am res")
 /* if (c) {
   return (
     <section className="flexStart flex-col paddings">
