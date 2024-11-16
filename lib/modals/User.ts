@@ -7,6 +7,7 @@ export interface IUsers extends Document {
   name: string;
   email: string;
   image: Url;
+  password:string;
   description:string;
   githubUrl:Url,
   linkedinUrl:Url,
@@ -15,7 +16,8 @@ export interface IUsers extends Document {
 
 const userSchema:any = new Schema<IUsers>({
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true},
+  password: { type: String, unique: true , required:true },
   image: { type: String },
   description:{type:String},
   githubUrl:{type:String},

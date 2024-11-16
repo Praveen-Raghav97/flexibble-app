@@ -32,6 +32,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
 
     const handleStateChange = (fieldName: keyof FormState, value: string) => {
         setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
+        console.log(form.image , "img form")
     };
 
     const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +56,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
             const result = reader.result as string;
 
             handleStateChange("image", result)
+            console.log(result , 'img url')
         };
     };
 

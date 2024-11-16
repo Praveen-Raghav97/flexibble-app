@@ -1,10 +1,11 @@
 import { getServerSession } from "next-auth";
-import { ProjectForm, SessionInterface } from "@/commom.types";
+import { ProjectForm, SessionInterface, UserProfiles } from "@/commom.types";
 import { options } from "@/app/api/auth/[...nextauth]/option";
 import Users from "./modals/User";
 import dbConnect from "./mongodb";
 import Project from "./modals/Project";
 
+import bcrypt from "bcryptjs";
 
 const isProduction = process.env.NODE_ENV === 'production';
 const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL : 'http://localhost:3000';
@@ -178,22 +179,7 @@ export const updateProject = async (form: ProjectForm, projectId: string, token:
     }
   return data
   };
-  export const getAllProjects = async () => {
-    let data;
-   
-    try {
-      const response = await fetch(`${serverUrl}/api/posts`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch projects');
-      }
-       data = await response.json();
-     // console.log(data)
-      return data
-    } catch (error: any) {
-     console.log(error)
-    }
-  return data
-  };
+
   export const getAllProject = async () => {
    
     let data;
@@ -239,23 +225,50 @@ return data
   };
 
   export const SignupUser = async (form:any) =>{
-       let user ;
        try {
-
-        
-        user = await Users.create({
-          name:name,
-          email:email,
-          password: hashpassword,
-          image: imurl,
-
-        })
-        if (!user) {
-          return("user not create")
+        const res = await fetch(`${serverUrl}/api/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+  
+        if (res.ok) {
+          return("Signup successful!");
+        } else {
+          const errorData = await res.json();
+          console.log(`Error: ${errorData.message}`);
         }
-        return(user)
-       } catch (error) {
-        console.log(error)
-       }
+      } catch (error) {
+        console.log("An unexpected error occurred.");
+      }
+
+      
+      const imageUrl = await uploadImage(form.image);
+console.log(imageUrl , 'image url clodinaray')
+      if (imageUrl.url) {
+         
+          const variables = {
+            input: { 
+              ...form, 
+              image: imageUrl.url, 
+             
+            }
+          };
+      }
 
   }
+
+
+
+
+
+export async function hashPassword(password: string): Promise<string> {
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  return hashedPassword;
+}
+
+export async function verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
+  const isMatch = await bcrypt.compare(password, hashedPassword);
+  return isMatch;
+}

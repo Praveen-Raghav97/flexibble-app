@@ -6,7 +6,7 @@ import LinkedInProvider from 'next-auth/providers/linkedin';
 import img from './pic4.png'
 import jsonwebtoken from 'jsonwebtoken'
 import { JWT } from "next-auth/jwt";
-import { SessionInterface, UserProfile } from "@/commom.types";
+import { SessionInterface, UserProfiles } from "@/commom.types";
 import dbConnect from '@/lib/mongodb';
 import EmailProvider from 'next-auth/providers/email';
 SignIn
@@ -63,12 +63,16 @@ export const options: NextAuthOptions = {
         throw new Error("No user found with the entered email");
       }
 
-     // const isValidPassword = await compare(credentials.password, user.password);
-     // if (!isValidPassword) {
-     //   throw new Error("Invalid password");
-     // }
+      const isValidPassword = await compare(credentials.password, user.password);
+      if (!isValidPassword) {
+        throw new Error("Invalid password");
+      }
 
-      return { id: user._id, email: user.email, name: user.name };
+      return  {_id: user._id,
+      name: user.name,
+      email: user.email,
+     // image: user.image || '', // optional field;
+      }
     },
   }),
 
@@ -121,7 +125,7 @@ theme:{
             // Send properties to the client, like an access_token from a provider.
             const email = session?.user?.email as string;
             let data = await Users.findOne({email}).lean() as {
-              _id: string; user?: UserProfile 
+              _id: string; user?: UserProfiles 
 }
            
              
@@ -130,7 +134,7 @@ theme:{
             const newSession = {
               ...session,
               user:{
-               // data,
+               // data
                 _id: data._id.toString(),
                ...session.user
               }
@@ -141,11 +145,13 @@ theme:{
           return newSession;
           },
 
-          async signIn({ user }) {
+          async signIn({ user }: {
+            user: AdapterUser | User
+          }) {
          
          
             try {
-              const userExists = await getUser(user?.email as string) as { user?: UserProfile }
+              const userExists = await getUser(user?.email as string) as { user?: UserProfiles }
               
               if (!userExists.user) {
                 await createUser(user.name as string, user.email as string, user.image as string)

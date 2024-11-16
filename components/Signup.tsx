@@ -2,27 +2,62 @@
 
 import { signIn } from 'next-auth/react'; // NextAuth signIn function
 import { Button, TextField, Typography, Box, Container } from '@mui/material'; // Material UI components
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { SignupUser, uploadImage } from '@/lib/Session';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
+
+
+export interface SignupResponse {
+  message: string;
+  userId?: string;
+}
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    name: "",
     email: '',
     password: '',
-    image: null,
+    image: "",
   });
 
   const [filePreview, setFilePreview] = useState<string | null>(null);
-
+  const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, files } = e.target;
 
     if (type === 'file') {
       if (files && files[0]) {
-        setFormData((prevData: any) => ({
-          ...prevData,
-          image: files[0],
-        }));
+
+        const file = e.target.files?.[0];
+
+        if (!file) return;
+        if (!file.type.includes('image')) {
+          console.log('Please upload an image!');
+
+          return;
+      }
+
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const result = reader.result as string;
+
+        formData.image = result;
+        console.log(result , 'img url')
+    };
+     
+
+       // setFormData((prevData: any) => ({
+         // ...prevData,
+         // image: result,
+        //}));
+
         setFilePreview(URL.createObjectURL(files[0])); // Set the preview URL
       }
     } else {
@@ -33,9 +68,35 @@ const SignUp = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData, ' i am data');
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Redirect to sign-in page after successful signup
+        router.push('/sign-in');
+      } else {
+        const data = await response.json();
+        setError(data.message || 'Signup failed');
+      }
+    } catch (err) {
+      setError('Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  
   };
 
   return (
@@ -92,6 +153,7 @@ const SignUp = () => {
             sx={{ mb: 3 }}
             value={formData.password}
             required
+            
             onChange={handleChange}
           />
 
@@ -163,7 +225,7 @@ const SignUp = () => {
             cursor: 'pointer',
           }}
         >
-          Already have an account? <span>Sign In</span>
+          Already have an account? <Link href = '/signin'><span>Sign In</span></Link>
         </Typography>
 
         <Typography

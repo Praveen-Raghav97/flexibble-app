@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 
 import { fetchToken, getAllProject, getAllProjects } from "@/lib/Session";
 import { getAllProjectDetails } from "@/lib/Session";
-
+import toast, { Toaster } from 'react-hot-toast';
 
 
 type SearchParams = {
@@ -43,10 +43,10 @@ let data;
 //console.log(data)
 
 let res;
- res = await getAllProjects();
+ //res = await getAllProjects();
  
 //console.log(res, "i am res")
-/* if (c) {
+/*if (res) {
   return (
     <section className="flexStart flex-col paddings">
       <Categories />
@@ -70,7 +70,7 @@ let res;
   )
 }*/
   
-  if (!data) {
+  if ( !data ) {
     return (
       <section className="flexStart flex-col paddings">
         <Categories />
@@ -88,7 +88,10 @@ let res;
     <Categories/>
 
     <section className="projects-grid mt-30" >
-        {data.map((data:any) => (
+      
+        {
+
+        data.map((data:any) => (
             <ProjectCard
             key={data._id}
             id={data._id}
@@ -103,7 +106,7 @@ let res;
 
       </section>
 
-     
+      <Toaster />
   </section>
   );
 }

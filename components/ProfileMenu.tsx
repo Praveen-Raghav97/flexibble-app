@@ -19,7 +19,9 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
         <div className="flexCenter z-10 flex-col relative">
             <Menu as="div">
                 <Menu.Button className="flexCenter" onMouseEnter={() => setOpenModal(true)} >
-                   {session?.user.image && (
+                    
+                   {session?.user.image ? (
+                    
                    <Image
                    src={session.user.image || img}
                    width={40}
@@ -28,9 +30,9 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                    alt="user profile image"
                />
                         
-                    )}
+                    ):( <span className="text-md text-white rounded-xl text-sm font-medium max-md:w-full bg-primary-purple py-3 px-7">{session?.user.name || "User"}</span>)}
                 </Menu.Button>
-
+ 
                 <Transition
                     show={openModal}
                     as={Fragment}

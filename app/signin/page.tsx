@@ -1,3 +1,5 @@
+'use client'
+
 import SignIn from '@/components/signin'
 import React from 'react'
 import img from '../../public/logo-purple.svg'

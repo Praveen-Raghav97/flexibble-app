@@ -34,7 +34,7 @@ export interface UserProfiles {
     name: string;
     email: string;
     description: string | null;
-    avatarUrl: string;
+    image: string | null ;
     githubUrl: string | null;
     linkedinUrl: string | null;
     projects: Project[];
@@ -47,7 +47,7 @@ export interface SessionInterface extends Session {
     _id: string ;
     name: string ;
     email: string  ;
-    image?: string ; 
+    image: string ; 
   };
 }
 
