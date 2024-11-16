@@ -1,4 +1,34 @@
-# Project Sharing Platform
+<div align="center">
+  <br />
+    <a href="https://youtu.be/986hztrfaSQ?feature=shared" target="_blank">
+      <img src="https://github.com/adrianhajdin/project_nextjs13_flexibble/assets/151519281/e4d6a34f-31a8-4370-a3df-d59e0463a18e" alt="Project Banner">
+    </a>
+  <br />
+
+  <div>
+    <img src="https://img.shields.io/badge/-Next_JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextdotjs" />
+    <img src="https://img.shields.io/badge/-Cloudinary-black?style=for-the-badge&logoColor=white&logo=cloudinary&color=3448C5" alt="cloudinary" />
+    <img src="https://img.shields.io/badge/-Graphql-black?style=for-the-badge&logoColor=white&logo=graphql&color=E10098" alt="graphql" />
+    <img src="https://img.shields.io/badge/-JSON_Web_Tokens-black?style=for-the-badge&logoColor=white&logo=jsonwebtokens&color=000000" alt="jsonwebtokens" />
+    <img src="https://img.shields.io/badge/-Typescript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="typescript" />
+    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
+     <img src="https://img.shields.io/badge/-Headlessui-black?style=for-the-badge&logoColor=white&logo=headlessui&color=66E3FF" alt="headlessui" />
+  </div>
+
+  <h3 align="center">A Full Stack Dribble Clone</h3>
+
+ 
+## 📋 <a name="table">Table of Contents</a>
+
+1. 🤖 [Introduction](#introduction)
+2. ⚙️ [Tech Stack](#tech-stack)
+3. 🔋 [Features](#features)
+4. 🤸 [Quick Start](#quick-start)
+5. 🕸️ [Snippets](#snippets)
+6. 🔗 [Links](#links)
+7. 🚀 [More](#more)
+
+
 
 A **Project Sharing Platform** built using **Next.js** and **TypeScript** that enables users to showcase their projects, share resources, and collaborate with others. The platform includes advanced features such as authentication, CRUD operations for projects, a user profile page, and dedicated sections for learning development and hiring developers.
 
