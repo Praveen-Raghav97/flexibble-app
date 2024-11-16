@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a href="https://youtu.be/986hztrfaSQ?feature=shared" target="_blank">
-      <img src="https://github.com/adrianhajdin/project_nextjs13_flexibble/assets/151519281/e4d6a34f-31a8-4370-a3df-d59e0463a18e" alt="Project Banner">
+      <img src="https://asset.cloudinary.com/derlbfbjz/f78154d3863e5b189d5c80890f3b7d1c" alt="Project Banner">
     </a>
   <br />
 
