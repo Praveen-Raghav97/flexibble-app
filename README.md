@@ -16,7 +16,7 @@
   </div>
 
   <h3 align="center">A Full Stack Dribble Clone</h3>
-
+ </div>
  
 ## 📋 <a name="table">Table of Contents</a>
 
