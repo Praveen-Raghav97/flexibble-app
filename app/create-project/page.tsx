@@ -1,12 +1,12 @@
 import Model from '@/components/Model'
 import ProjectForm from '@/components/ProjectForm'
-import { getCurrentUser } from '@/lib/Session'
+import { getCurrentUser } from '@/lib/ActionControler'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
 const page = async () => {
   const session = await getCurrentUser();
-  console.log(session)
+  //console.log(session)
   if (!session?.user) redirect("/")
     
   return (

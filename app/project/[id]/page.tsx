@@ -1,9 +1,9 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import {fetchProjectById, getUserbyID} from '../../../lib/Session'
-import { getCurrentUser } from "@/lib/session"
-import { getAllProjectDetails } from "@/lib/Session"
+import {fetchProjectById, getUserbyID} from '../../../lib/ActionControler'
+import { getCurrentUser } from "@/lib/ActionControler"
+import { getAllProjectDetails } from "@/lib/ActionControler"
 import Model from "@/components/Model"
 import ProjectActions from "@/components/ProjectActions"
 import RelatedProjects from "@/components/RelatedProjects"

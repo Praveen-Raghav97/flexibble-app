@@ -1,14 +1,14 @@
 import { ProjectInterface } from '@/commom.types';
 import Model from '@/components/Model'
 import ProjectForm from '@/components/ProjectForm'
-import { getCurrentUser, fetchProjectById } from '@/lib/Session';
+import { getCurrentUser, fetchProjectById } from '@/lib/ActionControler';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
 const EditProject = async ({params}:any) => {
   // asynchronous access of `params.id`.
   const { id } = await params;
-  console.log(id , "i am id")
+ // console.log(id , "i am id")
     
         const session = await getCurrentUser();
       

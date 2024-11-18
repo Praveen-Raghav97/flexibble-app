@@ -7,7 +7,7 @@ import AuthProvider from './AuthProvider'
 import Button from './Button'
 import { getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
-import { getCurrentUser } from '@/lib/Session'
+import { getCurrentUser } from '@/lib/ActionControler'
 import ProfileMenu from './ProfileMenu'
 
 

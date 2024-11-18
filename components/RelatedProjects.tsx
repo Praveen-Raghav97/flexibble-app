@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { getUserbyID, getUserProjects } from '@/lib/Session'
+import { getUserbyID, getUserProjects } from '@/lib/ActionControler'
 import { ProjectInterface, UserProfiles } from '@/commom.types'
 import Image from 'next/image'
 import ProjectCard from './ProjectCard'

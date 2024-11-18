@@ -3,11 +3,13 @@
 import { signIn } from 'next-auth/react'; // NextAuth signIn function
 import { Button, TextField, Typography, Box, Container } from '@mui/material'; // Material UI components
 import { ChangeEvent, useEffect, useState } from 'react';
-import { SignupUser, uploadImage } from '@/lib/Session';
+import { SignupUser, uploadImage } from '@/lib/ActionControler';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 
+const isProduction = process.env.NODE_ENV === 'production';
+const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL : 'http://localhost:3000';
 
 export interface SignupResponse {
   message: string;
@@ -76,7 +78,7 @@ const SignUp = () => {
     setError(null);
 
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch(`${serverUrl}/api/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

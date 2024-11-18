@@ -1,4 +1,5 @@
 
+import '../app/globals.css';
 import { ProjectInterface } from "@/commom.types";
 import Categories from "@/components/Categories";
 import LoadMore from "@/components/LoadMore";
@@ -6,9 +7,10 @@ import ProjectCard from "@/components/ProjectCard";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 
-import { fetchToken, getAllProject, getAllProjects } from "@/lib/Session";
-import { getAllProjectDetails } from "@/lib/Session";
+import { fetchToken, getAllProject } from "@/lib/ActionControler";
+import { getAllProjectDetails } from "@/lib/ActionControler";
 import toast, { Toaster } from 'react-hot-toast';
+import Head from 'next/head';
 
 
 type SearchParams = {
@@ -39,44 +41,30 @@ const  Home = async ({ searchParams}: Props) => {
 
 let data;
 
-   data = await getAllProjectDetails(category) ;
-//console.log(data)
-
-let res;
- //res = await getAllProjects();
- 
-//console.log(res, "i am res")
-/*if (res) {
-  return (
-    <section className="flexStart flex-col paddings">
-      <Categories />
-
-      <section className="projects-grid mt-30" >
-        {res?.map((data:any) => (
-            <ProjectCard
-            key={data._id}
-            id={data._id}
-            image={data?.image}
-            title={data.title}
-            name={data?.createdBy?.name}
-            avatarUrl={data?.createdBy?.image}
-            userId={data?.createdBy?._id}
-          />
-        ))}
-
-
-      </section>
-    </section>
-  )
-}*/
   
-  if ( !data ) {
+ if(category){
+  data = await getAllProjectDetails(category) ;
+ }else{
+  data = await getAllProject()
+ }
+
+
+ 
+
+  
+  if ( !data) {
     return (
+      <>
+            <Head>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
       <section className="flexStart flex-col paddings">
         <Categories />
 
         <p className="no-result-text text-center">No projects found, go create some first.</p>
       </section>
+      </>
+
     )
   }
 
@@ -89,17 +77,17 @@ let res;
 
     <section className="projects-grid mt-30" >
       
-        {
+        { 
 
-        data.map((data:any) => (
+        data.map((data:any)  => (
             <ProjectCard
-            key={data._id}
-            id={data._id}
+            key={data._id.toString()}
+            id={data._id.toString()}
             image={data.image}
             title={data.title}
             name={data?.createdBy?.name}
             avatarUrl={data?.createdBy?.image}
-            userId={data?.createdBy?._id}
+            userId={data?.createdBy?._id.toString()}
           />
         ))}
 

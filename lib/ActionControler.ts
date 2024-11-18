@@ -186,7 +186,7 @@ export const updateProject = async (form: ProjectForm, projectId: string, token:
    
     try {
       await dbConnect()
-      data = await  Project.find({});
+      data = await  Project.find({}).populate('createdBy');
       return data
     } catch (error) {
       console.log(error)
@@ -212,7 +212,7 @@ return data
  
  export const fetchUserByEmail = async (email:string) => {
     try {
-      const response = await fetch(`/api/user/${email}`);
+      const response = await fetch(`${serverUrl}/api/user/${email}`);
       if (!response.ok) {
         throw new Error('User not found');
       }

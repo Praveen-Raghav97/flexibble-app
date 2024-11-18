@@ -8,7 +8,7 @@ import { Menu, Transition } from "@headlessui/react";
 import img from '../public/profile-post.png'
 
 import { SessionInterface } from "@/commom.types";
-import { fetchToken, getUser } from "@/lib/Session";
+import { fetchToken } from "@/lib/ActionControler";
 import { user } from "@nextui-org/react";
 
 const ProfileMenu = ({ session }: { session: SessionInterface }) => {

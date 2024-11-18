@@ -1,6 +1,6 @@
 import { UserProfiles  } from '@/commom.types';
 import ProfilePage from '@/components/ProfilePage'
-import { getUserbyID, getUserProjects } from '@/lib/Session'
+import { getUserbyID, getUserProjects } from '@/lib/ActionControler'
 
 
 
