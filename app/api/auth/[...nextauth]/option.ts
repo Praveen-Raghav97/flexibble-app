@@ -15,7 +15,7 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { AdapterUser } from 'next-auth/adapters';
 import { NextResponse } from 'next/server';
 import Users from '@/lib/modals/User';
-import SignIn from '../../../../components/signin';
+import SignIn from '../../../../components/Signin';
 SignIn
 
 

@@ -1,6 +1,6 @@
 'use client'
 
-import SignIn from '@/components/signin'
+import SignIn from '@/components/Signin'
 import React from 'react'
 import img from '../../public/logo-purple.svg'
 import Image from 'next/image'
