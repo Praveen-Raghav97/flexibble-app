@@ -33,7 +33,15 @@ const ProfilePage = ({ user }: Props) =>{
     <section className='flexCenter flex-col max-w-10xl w-full mx-auto paddings'>
         <section className="flexBetween max-lg:flex-col gap-10 w-full">
             <div className='flex items-start flex-col w-full'>
-                <Image src={user?.image} width={80} height={80} className="rounded-full" alt="user image" />
+            {user?.image && (
+      <Image 
+        src={user.image} 
+        width={80} 
+        height={80} 
+        className="rounded-full" 
+        alt="user image" 
+      />
+    )}
                 <p className="text-4xl font-bold mt-10">{user?.name}</p>
                 <p className="md:text-5xl text-3xl font-extrabold md:mt-10 mt-5 max-w-lg">I’m Software Engineer at Google 👋</p>
                 
@@ -81,7 +89,7 @@ id={data._id}
 image={data.image}
 title={data.title}
 name={user?.name}
-avatarUrl={user?.image}
+avatarUrl={user?.image|| '/default-avatar.png'}
 userId={userId}
 />
 ))}

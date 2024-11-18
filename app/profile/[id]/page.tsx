@@ -5,9 +5,8 @@ import { getUserbyID, getUserProjects } from '@/lib/ActionControler'
 
 
 type Props = {
-    params: {
-        id: string,
-    },
+   
+  params: Promise<{ id: string }>  // Ensure params is a Promise
 }
 const UserProfile = async ({ params }: Props)=> {
  

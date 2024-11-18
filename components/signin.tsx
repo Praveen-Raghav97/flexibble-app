@@ -13,7 +13,12 @@ const SignIn = () => {
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+// Typecast e.target as HTMLFormElement
+const form = e.target as HTMLFormElement;
+const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+  
+  
     if (!email  || !password) {
       toast.error("All fields are required!");
       return;

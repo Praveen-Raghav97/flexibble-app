@@ -21,7 +21,7 @@ export interface ProjectInterface {
     createdBy: {
       name: string;
       email: string;
-      avatarUrl: string;
+      image: string;
       _id: string;
     };
 }

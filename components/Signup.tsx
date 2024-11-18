@@ -210,7 +210,7 @@ const SignUp = () => {
                 maxWidth: '100%',
                 height: 'auto',
                 width: '100%',
-                maxWidth: '400px',
+               
                 borderRadius: '10px',
               }}
             />

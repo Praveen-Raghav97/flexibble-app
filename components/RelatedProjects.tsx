@@ -50,7 +50,7 @@ const RelatedProjects = async ({ userId, projectId }: Props) => {
             image={data.image}
             title={data.title}
             name={result?.user?.name}
-            avatarUrl={result?.user?.image}
+            avatarUrl={result?.user?.image ||'/default-avatar.png'}
             userId={userId}
           />
         ))}

@@ -25,7 +25,7 @@ const Project = async ({params}:any) => {
 
     const projectDetails = result?.project
 
-    const renderLink = () => `/profile/${projectDetails?.createdBy?.id}`
+    const renderLink = () => `/profile/${projectDetails?.createdBy?._id}`
   let userId = projectDetails.createdBy._id
  // console.log(userId , "i am id")
     return (

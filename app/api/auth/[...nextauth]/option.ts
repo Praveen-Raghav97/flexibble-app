@@ -68,7 +68,7 @@ export const options: NextAuthOptions = {
         throw new Error("Invalid password");
       }
 
-      return  {_id: user._id,
+      return  {id: user._id.toString(),
       name: user.name,
       email: user.email,
      // image: user.image || '', // optional field;
@@ -135,7 +135,7 @@ theme:{
               ...session,
               user:{
                // data
-                _id: data._id.toString(),
+                id: data._id.toString(),
                ...session.user
               }
         
