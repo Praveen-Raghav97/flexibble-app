@@ -1,4 +1,4 @@
-import '../app/globals.css';
+import '@/app/globals.css';
 import { ProjectInterface } from "@/commom.types";
 import Categories from "@/components/Categories";
 import LoadMore from "@/components/LoadMore";

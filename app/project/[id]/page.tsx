@@ -1,7 +1,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import {fetchProjectById, getUserbyID} from '../../../lib/ActionControler'
+import {fetchProjectById, getUserbyID} from '@/lib/ActionControler'
 import { getCurrentUser } from "@/lib/ActionControler"
 import { getAllProjectDetails } from "@/lib/ActionControler"
 import Model from "@/components/Model"

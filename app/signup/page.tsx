@@ -1,7 +1,7 @@
 import SignUp from '@/components/Signup'
 import Image from 'next/image'
 import React from 'react'
-import panda from '../../public/Animation.gif'
+import panda from '@/public/Animation.gif'
 import Video from '@/components/video';
 
 const Page = () => {
