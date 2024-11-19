@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from "react-hot-toast";
 
-const SignIn = () => {
+const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -182,4 +182,4 @@ try {
   );
 };
 
-export default SignIn;
+export default Signin;
