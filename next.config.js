@@ -1,6 +1,7 @@
 module.exports = {
   
   webpack(config) {
+    config.resolve.alias['@'] = path.resolve(__dirname);
     config.module.rules.push({
       test: /\.(mp4|webm|ogg|avi)$/,
       type: 'asset/resource',
