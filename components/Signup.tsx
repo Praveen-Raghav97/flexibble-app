@@ -88,7 +88,7 @@ const SignUp = () => {
 
       if (response.ok) {
         // Redirect to sign-in page after successful signup
-        router.push('/sign-in');
+        router.push('/signin');
       } else {
         const data = await response.json();
         setError(data.message || 'Signup failed');
@@ -190,6 +190,7 @@ const SignUp = () => {
             accept="image/*"
             onChange={handleChange}
             style={{ display: 'none' }}
+            required
           />
           <Button
             variant="outlined"
