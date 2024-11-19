@@ -2,6 +2,7 @@
 import React from 'react'
 import img from '@/public/logo-purple.svg'
 import Image from 'next/image'
+import Signin from '@/components/signin'
 
 
 const page = () => {
@@ -31,7 +32,7 @@ const page = () => {
 
       {/* Right Section */}
       <div className="w-full sm:w-auto flex items-center justify-center">
-      
+      <Signin/>
       </div>
     </div>
   )
