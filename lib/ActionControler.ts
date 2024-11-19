@@ -199,7 +199,7 @@ return data
  export const fetchProjectById = async (id:any) => {
     let data;
     try {
-      const res = await fetch(`${serverUrl}/api/posts/${id}`);
+      const res = await fetch(`/api/posts/${id}`);
        data = await res.json();
       
       //console.log(data);
