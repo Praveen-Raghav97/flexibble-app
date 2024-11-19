@@ -2,7 +2,7 @@
 import React from 'react'
 import img from '@/public/logo-purple.svg'
 import Image from 'next/image'
-import Signin from '../../components/Signin'
+import Signin from '@/components/Signin'
 
 const page = () => {
   return (
