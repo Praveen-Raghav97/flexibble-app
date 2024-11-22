@@ -1,12 +1,11 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { Button, TextField, Typography, Box, Container } from "@mui/material";
-import { FaGoogle, FaLinkedin, FaGithub } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { FaGoogle, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -61,118 +60,95 @@ const SignIn = () => {
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      className="flex justify-center items-center min-h-screen p-4 "
-    >
-      <Box
-        className="bg-white p-6 rounded-lg w-full shadow-md"
-        sx={{ maxWidth: 400 }}
-      >
-        <Typography
-          variant="h5"
-          className="mb-2 text-gray-800 font-bold text-center"
-        >
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-4">
           Welcome Back!
-        </Typography>
-        <Typography
-          variant="body1"
-          className="mb-8 text-gray-500 text-center"
-        >
+        </h1>
+        <p className="text-gray-500 text-center mb-8">
           Sign in to continue browsing.
-        </Typography>
+        </p>
 
         {/* Sign-In Form */}
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Email"
-            type="email"
-            variant="outlined"
-            fullWidth
-            className="mb-4"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            className="mb-6"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button
             type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className="mb-4"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition"
           >
             Sign In
-          </Button>
+          </button>
         </form>
 
-        <Typography
-          className="text-center text-gray-500 mb-4"
-          variant="body2"
-        >
-          OR
-        </Typography>
+        <p className="text-center text-gray-500 my-4">OR</p>
 
         {/* Social Sign-In Buttons */}
-        <Button
-          fullWidth
-          variant="outlined"
-          startIcon={<FaGoogle className="text-orange-500" />}
-          className="mb-3"
-          onClick={() => handleSocialSignIn("google")}
-        >
-          Continue with Google
-        </Button>
-        <Button
-          fullWidth
-          variant="outlined"
-          startIcon={<FaLinkedin className="text-blue-500" />}
-          className="mb-3"
-          onClick={() => handleSocialSignIn("linkedin")}
-        >
-          Continue with LinkedIn
-        </Button>
-        <Button
-          fullWidth
-          variant="outlined"
-          startIcon={<FaGithub />}
-          className="mb-4"
-          onClick={() => handleSocialSignIn("github")}
-        >
-          Continue with GitHub
-        </Button>
+        <div className="space-y-3">
+          <button
+            className="w-full flex items-center justify-center px-4 py-2 border rounded-md hover:bg-gray-100 transition"
+            onClick={() => handleSocialSignIn("google")}
+          >
+            <FaGoogle className="text-orange-500 mr-2" /> Continue with Google
+          </button>
+          <button
+            className="w-full flex items-center justify-center px-4 py-2 border rounded-md hover:bg-gray-100 transition"
+            onClick={() => handleSocialSignIn("linkedin")}
+          >
+            <FaLinkedin className="text-blue-500 mr-2" /> Continue with LinkedIn
+          </button>
+          <button
+            className="w-full flex items-center justify-center px-4 py-2 border rounded-md hover:bg-gray-100 transition"
+            onClick={() => handleSocialSignIn("github")}
+          >
+            <FaGithub className="mr-2" /> Continue with GitHub
+          </button>
+        </div>
 
         {/* Additional Links */}
-        <Typography
-          variant="body2"
-          className="text-center text-gray-500"
-        >
+        <p className="text-center text-gray-500 mt-6">
           Don’t have an account?{" "}
           <Link href="/signup">
-            <span className="text-blue-500 font-medium cursor-pointer">
-              Sign Up
-            </span>
+            <a className="text-blue-600 font-medium hover:underline">Sign Up</a>
           </Link>
-        </Typography>
-        <Typography
-          variant="body2"
-          className="text-center mt-2 text-gray-400"
-        >
+        </p>
+        <p className="text-center text-gray-400 text-sm mt-2">
           By signing in, you agree to our{" "}
-          <span className="text-black underline cursor-pointer">
+          <span className="text-blue-600 underline cursor-pointer">
             Terms and Policy
           </span>
           .
-        </Typography>
-      </Box>
-    </Container>
+        </p>
+      </div>
+    </div>
   );
 };
 
